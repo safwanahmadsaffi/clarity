@@ -11,6 +11,13 @@ import {
   Sun,
   Moon,
   X,
+  Layers,
+  Zap,
+  Users,
+  BarChart3,
+  HelpCircle,
+  Mail,
+  Quote,
 } from "lucide-react";
 
 import {
@@ -27,26 +34,32 @@ const features = [
   {
     title: "Simple task boards",
     description: "Organize work with drag-and-drop boards that stay out of your way.",
+    icon: Layers,
   },
   {
     title: "Fast prioritization",
     description: "Focus on what matters today with clear priorities and due dates.",
+    icon: Zap,
   },
   {
     title: "Team collaboration",
     description: "Comment, assign, and mention teammates to keep everyone aligned.",
+    icon: Users,
   },
   {
     title: "Clear progress",
     description: "See project health at a glance with lightweight progress tracking.",
+    icon: BarChart3,
   },
   {
     title: "Private by default",
     description: "Your data is encrypted and only visible to people you invite.",
+    icon: Shield,
   },
   {
     title: "Zero setup",
     description: "Create a project in seconds and invite your team with one link.",
+    icon: Sparkles,
   },
 ];
 
@@ -521,43 +534,57 @@ function Index() {
           </div>
         </section>
 
-        <section id="features" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-          <div className="max-w-2xl">
-            <div className="section-kicker">Features</div>
-            <h2 className="section-title">Everything you need, nothing more</h2>
+        <section id="features" className="relative overflow-hidden mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <div className="global-gridline" aria-hidden="true" />
+          <div className="relative z-10 max-w-2xl">
+            <div className="section-kicker">01 / Features</div>
+            <h2 className="section-title">
+              Everything you need,
+              <span>nothing more.</span>
+            </h2>
             <p className="section-copy mt-5">
               Built for teams that want to move fast without getting lost in complex workflows.
             </p>
           </div>
 
-          <div className="feature-grid mt-12">
-            {features.map((feature, index) => (
-              <Card
-                key={feature.title}
-                className="feature-card feature-card--slide border-border/70 bg-background/80"
-              >
-                <CardContent className="p-6">
-                  <div className="feature-card-top">
-                    <div className="feature-mark">0{index + 1}</div>
-                    <div className="feature-card-line" aria-hidden="true" />
-                  </div>
-                  <h3 className="mt-5 text-xl font-semibold tracking-tight text-foreground">
-                    {feature.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                    {feature.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="relative z-10 feature-grid mt-12">
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <Card
+                  key={feature.title}
+                  className="feature-card feature-card--slide border-border/70 bg-background/80"
+                >
+                  <CardContent className="p-6">
+                    <div className="feature-card-top">
+                      <div className="feature-mark">0{index + 1}</div>
+                      <div className="feature-card-line" aria-hidden="true" />
+                    </div>
+                    <div className="feature-card-icon mt-6">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-xl font-semibold tracking-tight text-foreground">
+                      {feature.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </section>
 
-        <section id="how-it-works" className="workflow-section border-y border-border/70 bg-background">
-          <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+        <section id="how-it-works" className="relative overflow-hidden workflow-section border-y border-border/70 bg-background/50">
+          <div className="global-gridline" aria-hidden="true" />
+          <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
             <div className="max-w-3xl">
-              <div className="section-kicker">How it works</div>
-              <h2 className="section-title">Get your team up and running in minutes</h2>
+              <div className="section-kicker">02 / Process</div>
+              <h2 className="section-title">
+                Get your team running
+                <span>in minutes.</span>
+              </h2>
               <p className="section-copy mt-5">
                 A simple workflow that keeps the team aligned without adding unnecessary process.
               </p>
@@ -581,32 +608,69 @@ function Index() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-          <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-center">
-            <div className="proof-panel">
-              <div className="proof-label">Customer quote</div>
-              <div className="proof-value text-3xl leading-tight sm:text-4xl">
+        <section className="relative overflow-hidden mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <div className="global-gridline" aria-hidden="true" />
+          <div className="relative z-10 grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+            <div className="proof-panel hero-frame shadow-xl">
+              <div className="flex items-center gap-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <Quote className="h-4 w-4" />
+                </div>
+                <div className="proof-label">03 / Validation</div>
+              </div>
+              <div className="proof-value mt-6 text-3xl leading-tight sm:text-4xl font-serif italic text-foreground/90">
                 “We tried three other tools before Clarity. It is the first one our team actually
                 wanted to keep using.”
               </div>
-              <p className="mt-5 text-sm font-semibold text-foreground">Sarah Chen</p>
+              <p className="mt-6 text-sm font-semibold text-foreground">Sarah Chen</p>
               <p className="text-sm text-muted-foreground">Product Lead, Northwind Studios</p>
+
+              {/* Interactive Telemetry Activity Heatmap */}
+              <div className="mt-8 flex flex-col gap-2 rounded-xl border border-border/60 bg-background/50 p-4">
+                <div className="text-xs font-semibold text-muted-foreground tracking-wider uppercase">Weekly Activity Stream</div>
+                <div className="flex gap-1.5 mt-2">
+                  {Array.from({ length: 14 }).map((_, i) => (
+                    <div key={i} className="flex flex-col gap-1.5">
+                      {Array.from({ length: 5 }).map((_, j) => {
+                        const levels = [
+                          "bg-muted/30",
+                          "bg-amber-100 dark:bg-amber-950/20",
+                          "bg-amber-300 dark:bg-amber-900/40",
+                          "bg-amber-500 dark:bg-amber-600/70",
+                          "bg-primary"
+                        ];
+                        const levelIdx = Math.floor(Math.abs(Math.sin(i * 0.4 + j * 0.7) * 4));
+                        return (
+                          <div 
+                            key={j} 
+                            className={`h-3 w-3 rounded-[3px] transition-all duration-300 hover:scale-125 cursor-help ${levels[levelIdx]}`}
+                            title={`Activity index: ${levelIdx}`}
+                          />
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div>
-              <div className="section-kicker">Accountability</div>
-              <h2 className="section-title">Clear progress, clear responsibility.</h2>
+              <div className="section-kicker">03 / Alignment</div>
+              <h2 className="section-title">
+                Clear progress,
+                <span>clear responsibility.</span>
+              </h2>
               <ul className="mt-6 space-y-4">
                 {[
                   "Weekly heatmaps help teams see where work actually happened.",
-                  "Exports are simple enough to share with clients or leadership.",
-                  "The system makes the next step easy to see.",
+                  "Simple csv and markdown exports for clients and stakeholders.",
+                  "The system automatically bubbles up priority items.",
                 ].map((item) => (
                   <li
                     key={item}
                     className="flex items-start gap-3 text-sm leading-6 text-foreground/85"
                   >
-                    <span className="mt-2 h-2 w-2 rounded-full bg-primary" />
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-primary animate-pulse" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -615,16 +679,20 @@ function Index() {
           </div>
         </section>
 
-        <section id="pricing" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-          <div className="max-w-2xl">
-            <div className="section-kicker">Pricing</div>
-            <h2 className="section-title">Straightforward pricing</h2>
+        <section id="pricing" className="relative overflow-hidden mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <div className="global-gridline" aria-hidden="true" />
+          <div className="relative z-10 max-w-2xl">
+            <div className="section-kicker">04 / Value</div>
+            <h2 className="section-title">
+              Straightforward pricing
+              <span>for growing teams.</span>
+            </h2>
             <p className="section-copy mt-5">
               Start free, then scale as your team grows.
             </p>
           </div>
 
-          <div className="pricing-grid mt-12">
+          <div className="relative z-10 pricing-grid mt-12">
             {pricingCards.map((card) => (
               <Card
                 key={card.name}
@@ -652,7 +720,7 @@ function Index() {
                     ) : null}
                   </div>
 
-                  <ul className="mt-6 space-y-3">
+                  <ul className="mt-6 space-y-3 flex-1">
                     {card.features.map((feature) => (
                       <li
                         key={feature}
@@ -664,7 +732,7 @@ function Index() {
                     ))}
                   </ul>
 
-                  <Button className="mt-8 w-full" variant={card.highlight ? "default" : "outline"}>
+                  <Button className="mt-8 w-full cursor-pointer" variant={card.highlight ? "default" : "outline"}>
                     {card.cta}
                   </Button>
                 </CardContent>
@@ -673,11 +741,15 @@ function Index() {
           </div>
         </section>
 
-        <section id="faq" className="border-y border-border/70 bg-muted/18">
-          <div className="mx-auto grid max-w-7xl gap-8 px-4 py-20 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8 lg:py-28">
+        <section id="faq" className="relative overflow-hidden border-y border-border/70 bg-muted/18">
+          <div className="global-gridline" aria-hidden="true" />
+          <div className="relative z-10 mx-auto grid max-w-7xl gap-8 px-4 py-20 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8 lg:py-28">
             <div>
-              <div className="section-kicker">FAQ</div>
-              <h2 className="section-title">Frequently asked questions</h2>
+              <div className="section-kicker">05 / Details</div>
+              <h2 className="section-title">
+                Frequently
+                <span>asked questions.</span>
+              </h2>
             </div>
 
             <Accordion type="single" collapsible className="faq-accordion">
@@ -696,20 +768,37 @@ function Index() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-          <div className="cta-panel border border-border/70 bg-background/85 px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-14">
-            <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <section className="relative overflow-hidden mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+          <div className="global-gridline" aria-hidden="true" />
+          <div className="cta-panel border border-border/70 bg-background/85 px-6 py-10 sm:px-10 sm:py-12 lg:px-14 lg:py-14 relative z-10 shadow-2xl shadow-amber-500/10">
+            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div>
-                <div className="section-kicker">Ready to begin</div>
-                <h2 className="section-title">Ready to bring clarity to your work?</h2>
-                <p className="section-copy mt-4 max-w-2xl">
-                  Join hundreds of teams who have simplified the way they manage projects.
+                <div className="section-kicker">06 / Begin</div>
+                <h2 className="section-title">
+                  Ready to bring
+                  <span>clarity to your work?</span>
+                </h2>
+                <p className="section-copy mt-4 max-w-xl">
+                  Join hundreds of teams who have simplified the way they plan, track, and ship projects.
                 </p>
               </div>
 
-              <div className="cta-form">
-                <Button size="lg">Start your free trial</Button>
-                <Button size="lg" variant="outline">Talk to sales</Button>
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Input
+                    type="email"
+                    placeholder="Enter your work email"
+                    aria-label="Enter your work email"
+                    className="h-12 flex-1 bg-background/60"
+                  />
+                  <Button size="lg" className="h-12 hero-button">
+                    <span>Start free trial</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Free 14-day trial. No credit card required.
+                </p>
               </div>
             </div>
           </div>
