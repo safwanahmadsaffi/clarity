@@ -380,7 +380,7 @@ function Index() {
             </div>
 
             <div className="hero-deck">
-              <div className="hero-frame hero-frame-main">
+              <div className="hero-frame hero-frame-main" data-status={goalStatuses[activeGoalIndex]}>
                 <div className="hero-frame-topline">
                   <span>Clarity / live board</span>
                   <span>Focused mode</span>
