@@ -296,10 +296,10 @@
   .hero-frame-main {
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease, filter 0.4s ease;
     box-shadow: 
-      0 0 0 1px rgba(0, 0, 0, 0.05),
-      0 12px 30px -10px rgba(0, 0, 0, 0.08),
-      0 30px 60px -15px rgba(245, 158, 11, 0.15),
-      0 50px 100px -20px rgba(0, 0, 0, 0.15);
+      0 0 0 1px rgba(0, 0, 0, 0.08),
+      0 15px 35px -10px rgba(0, 0, 0, 0.12),
+      0 35px 75px -15px rgba(245, 158, 11, 0.28),
+      0 60px 120px -20px rgba(0, 0, 0, 0.2);
   }
 
   .dark .hero-frame-main {
@@ -331,25 +331,25 @@
   /* Default/Active: focused, breathing/vibrating movement */
   .hero-frame-main[data-status="active"] {
     animation: 
-      float-active 4.5s ease-in-out infinite alternate,
-      hum-active 2s ease-in-out infinite alternate;
+      float-active 3.2s ease-in-out infinite alternate,
+      hum-active 1.2s ease-in-out infinite alternate;
   }
 
   /* Paused: static, quiet, minor sway */
   .hero-frame-main[data-status="paused"] {
-    animation: float-paused 14s ease-in-out infinite alternate;
+    animation: float-paused 15s ease-in-out infinite alternate;
     opacity: 0.93;
-    filter: grayscale(12%) contrast(97%);
+    filter: grayscale(15%) contrast(96%);
   }
 
   /* Completed: calm, peaceful, floating in satisfaction */
   .hero-frame-main[data-status="completed"] {
     animation: float-completed 8s ease-in-out infinite alternate;
     box-shadow: 
-      0 0 0 1px rgba(16, 185, 129, 0.15),
-      0 12px 30px -10px rgba(0, 0, 0, 0.05),
-      0 30px 60px -15px rgba(16, 185, 129, 0.22),
-      0 50px 100px -20px rgba(0, 0, 0, 0.1);
+      0 0 0 1px rgba(16, 185, 129, 0.24),
+      0 15px 35px -10px rgba(0, 0, 0, 0.12),
+      0 35px 75px -15px rgba(16, 185, 129, 0.35),
+      0 60px 120px -20px rgba(0, 0, 0, 0.15);
   }
 
   .dark .hero-frame-main[data-status="completed"] {
@@ -818,10 +818,10 @@
       transform: rotate(-1deg) translateY(0px) translateX(0px) scale(1);
     }
     50% {
-      transform: rotate(-0.2deg) translateY(-14px) translateX(6px) scale(1.015);
+      transform: rotate(0.4deg) translateY(-20px) translateX(8px) scale(1.025);
     }
     100% {
-      transform: rotate(-1.8deg) translateY(10px) translateX(-6px) scale(0.985);
+      transform: rotate(-2.4deg) translateY(14px) translateX(-8px) scale(0.975);
     }
   }
 
@@ -829,14 +829,17 @@
     0%, 100% {
       transform: rotate(-1deg) translate3d(0, 0, 0);
     }
-    25% {
-      transform: rotate(-0.95deg) translate3d(0.8px, -0.8px, 0);
+    20% {
+      transform: rotate(-0.9deg) translate3d(1.5px, -1.2px, 0);
     }
-    50% {
-      transform: rotate(-1.05deg) translate3d(-0.8px, 0.8px, 0);
+    40% {
+      transform: rotate(-1.1deg) translate3d(-1.5px, 1.2px, 0);
     }
-    75% {
-      transform: rotate(-0.98deg) translate3d(0.5px, 0.5px, 0);
+    60% {
+      transform: rotate(-0.95deg) translate3d(1.2px, 1.5px, 0);
+    }
+    80% {
+      transform: rotate(-1.05deg) translate3d(-1.2px, -1.5px, 0);
     }
   }
 
