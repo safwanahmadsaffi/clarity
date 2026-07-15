@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ArrowRight,
   Check,
@@ -8,6 +8,8 @@ import {
   Menu,
   Shield,
   Sparkles,
+  Sun,
+  Moon,
   X,
 } from "lucide-react";
 
@@ -141,8 +143,134 @@ export const Route = createFileRoute("/")({
   }),
 });
 
+const liveBoardGoals = [
+  {
+    goalTitle: "Launch project",
+    chipText: "Work in progress",
+    taskTitle: "Clean planning space",
+    description:
+      "One clear workspace for tasks, progress, and collaboration, designed to keep the team aligned.",
+    barsActive: 2,
+    barsHeight: ["2.1rem", "3.2rem", "5.6rem", "2.8rem"],
+  },
+  {
+    goalTitle: "Review backlog",
+    chipText: "In review",
+    taskTitle: "Prioritize backlog items",
+    description:
+      "Review incoming requests, estimate story points, and assign priorities for the next milestone.",
+    barsActive: 1,
+    barsHeight: ["3.5rem", "5.2rem", "2.8rem", "4.2rem"],
+  },
+  {
+    goalTitle: "Weekly sync",
+    chipText: "Up next",
+    taskTitle: "Align team roadmap",
+    description:
+      "Share weekly updates, address blockers, and confirm upcoming product deliverables.",
+    barsActive: 3,
+    barsHeight: ["4.8rem", "2.8rem", "3.6rem", "6.0rem"],
+  },
+];
+
 function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [activeGoalIndex, setActiveGoalIndex] = useState(0);
+  const [goalStatuses, setGoalStatuses] = useState<("active" | "paused" | "completed")[]>([
+    "active",
+    "active",
+    "active",
+  ]);
+  const [goalTimes, setGoalTimes] = useState<number[]>([4462, 2700, 1800]);
+  const [progressVal, setProgressVal] = useState(22.5);
+
+  useEffect(() => {
+    // Check initial theme state
+    const isDark = document.documentElement.classList.contains("dark");
+    setTheme(isDark ? "dark" : "light");
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "light" ? "dark" : "light";
+    setTheme(nextTheme);
+    if (nextTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setGoalTimes((prevTimes) =>
+        prevTimes.map((time, idx) => {
+          if (
+            idx === activeGoalIndex &&
+            goalStatuses[idx] === "active" &&
+            time > 0
+          ) {
+            return time - 1;
+          }
+          return time;
+        })
+      );
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [activeGoalIndex, goalStatuses]);
+
+  const formatTime = (totalSeconds: number) => {
+    const hrs = Math.floor(totalSeconds / 3600);
+    const mins = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+    return [
+      hrs.toString().padStart(2, "0"),
+      mins.toString().padStart(2, "0"),
+      secs.toString().padStart(2, "0"),
+    ].join(":");
+  };
+
+  const togglePause = () => {
+    setGoalStatuses((prev) => {
+      const next = [...prev];
+      if (next[activeGoalIndex] === "active") {
+        next[activeGoalIndex] = "paused";
+      } else if (next[activeGoalIndex] === "paused") {
+        next[activeGoalIndex] = "active";
+      }
+      return next;
+    });
+  };
+
+  const completeGoal = () => {
+    if (goalStatuses[activeGoalIndex] === "completed") return;
+    setGoalStatuses((prev) => {
+      const next = [...prev];
+      next[activeGoalIndex] = "completed";
+      return next;
+    });
+    setProgressVal((prev) => parseFloat((prev + 1.5).toFixed(1)));
+  };
+
+  const handlePauseResetClick = () => {
+    if (goalStatuses[activeGoalIndex] === "completed") {
+      setGoalStatuses((prev) => {
+        const next = [...prev];
+        next[activeGoalIndex] = "active";
+        return next;
+      });
+      setGoalTimes((prev) => {
+        const next = [...prev];
+        next[activeGoalIndex] =
+          activeGoalIndex === 0 ? 4462 : activeGoalIndex === 1 ? 2700 : 1800;
+        return next;
+      });
+    } else {
+      togglePause();
+    }
+  };
+
+  const activeGoal = liveBoardGoals[activeGoalIndex];
 
   return (
     <div className="page-shell flex min-h-screen flex-col bg-background text-foreground">
@@ -163,6 +291,15 @@ function Index() {
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              className="rounded-full w-9 h-9 cursor-pointer"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4" />}
+            </Button>
             <Button variant="ghost" size="sm">Log in</Button>
             <Button size="sm">Start free trial</Button>
           </div>
@@ -183,6 +320,19 @@ function Index() {
               <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>How it works</a>
               <a href="#pricing" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
               <a href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
+              <hr className="border-border/70" />
+              <div className="flex items-center justify-between py-1">
+                <span className="text-foreground">Theme</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={toggleTheme}
+                  className="rounded-full w-9 h-9 cursor-pointer"
+                  aria-label="Toggle theme"
+                >
+                  {theme === "dark" ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4" />}
+                </Button>
+              </div>
               <hr className="border-border/70" />
               <a href="#" className="text-foreground">Log in</a>
               <a href="#" className="text-foreground">Start free trial</a>
@@ -217,7 +367,7 @@ function Index() {
                     aria-label="Enter your work email"
                     className="h-12 flex-1"
                   />
-                  <Button size="lg" className="hero-button">
+                  <Button size="lg" className="hero-button h-12">
                     <span>Get started</span>
                     <ArrowRight className="h-4 w-4" />
                   </Button>
@@ -239,34 +389,100 @@ function Index() {
                 <div className="hero-dashboard">
                   <div className="hero-sidebar">
                     <div className="hero-sidebar-label">Active goals</div>
-                    <div className="hero-sidebar-item hero-sidebar-item--active">Launch project</div>
-                    <div className="hero-sidebar-item">Review backlog</div>
-                    <div className="hero-sidebar-item">Weekly sync</div>
+                    {liveBoardGoals.map((g, idx) => (
+                      <button
+                        key={g.goalTitle}
+                        onClick={() => setActiveGoalIndex(idx)}
+                        className={`hero-sidebar-item w-full text-left cursor-pointer transition-all duration-300 block ${
+                          activeGoalIndex === idx
+                            ? "hero-sidebar-item--active shadow-sm"
+                            : "hover:bg-muted/40 opacity-70 hover:opacity-100"
+                        }`}
+                      >
+                        {g.goalTitle}
+                      </button>
+                    ))}
                   </div>
 
-                  <div className="hero-focus-panel">
-                    <div className="hero-chip">Work in progress</div>
-                    <h2>Clean planning space</h2>
-                    <div className="hero-timer">01:14:22</div>
-                    <p>
-                      One clear workspace for tasks, progress, and collaboration, designed to keep the
-                      team aligned.
+                  <div className="hero-focus-panel transition-all duration-500">
+                    <div
+                      className={`hero-chip transition-all duration-300 ${
+                        goalStatuses[activeGoalIndex] === "completed"
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200! dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-800!"
+                          : goalStatuses[activeGoalIndex] === "paused"
+                            ? "bg-amber-50 text-amber-700 border-amber-200! dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800!"
+                            : ""
+                      }`}
+                    >
+                      {goalStatuses[activeGoalIndex] === "completed"
+                        ? "Completed"
+                        : goalStatuses[activeGoalIndex] === "paused"
+                          ? "Paused"
+                          : activeGoal.chipText}
+                    </div>
+                    <h2 className="transition-all duration-300">{activeGoal.taskTitle}</h2>
+                    <div
+                      className={`hero-timer font-mono transition-all duration-300 ${
+                        goalStatuses[activeGoalIndex] === "paused"
+                          ? "opacity-40 scale-95"
+                          : goalStatuses[activeGoalIndex] === "completed"
+                            ? "text-emerald-600 dark:text-emerald-400 scale-95"
+                            : ""
+                      }`}
+                    >
+                      {formatTime(goalTimes[activeGoalIndex])}
+                    </div>
+                    <p className="transition-all duration-300 min-h-[4rem]">
+                      {activeGoal.description}
                     </p>
 
                     <div className="hero-controls">
-                      <Button variant="outline" size="sm">Pause</Button>
-                      <Button size="sm">Complete</Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handlePauseResetClick}
+                        className="cursor-pointer"
+                      >
+                        {goalStatuses[activeGoalIndex] === "completed"
+                          ? "Reset"
+                          : goalStatuses[activeGoalIndex] === "paused"
+                            ? "Resume"
+                            : "Pause"}
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={completeGoal}
+                        disabled={goalStatuses[activeGoalIndex] === "completed"}
+                        className="cursor-pointer"
+                      >
+                        {goalStatuses[activeGoalIndex] === "completed" ? "Done" : "Complete"}
+                      </Button>
                     </div>
                   </div>
 
                   <div className="hero-signal-panel">
                     <div className="hero-sidebar-label">Progress</div>
-                    <div className="hero-signal-value">22.5h</div>
+                    <div className="hero-signal-value font-mono transition-all duration-300">
+                      {progressVal}h
+                    </div>
                     <div className="hero-bars" aria-hidden="true">
-                      <span />
-                      <span />
-                      <span className="is-active" />
-                      <span />
+                      {activeGoal.barsHeight.map((height, idx) => {
+                        const isActive = idx === activeGoal.barsActive;
+                        const isCompleted = goalStatuses[activeGoalIndex] === "completed";
+                        return (
+                          <span
+                            key={idx}
+                            style={{ height }}
+                            className={`transition-all duration-500 w-full rounded-t-md ${
+                              isActive
+                                ? isCompleted
+                                  ? "bg-emerald-500! shadow-[0_0_12px_rgba(16,185,129,0.3)]"
+                                  : "bg-primary! shadow-[0_0_12px_rgba(245,158,11,0.3)]"
+                                : "bg-border/60"
+                            }`}
+                          />
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
