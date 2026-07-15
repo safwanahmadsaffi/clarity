@@ -188,7 +188,6 @@ const liveBoardGoals = [
 
 function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [activeGoalIndex, setActiveGoalIndex] = useState(0);
   const [goalStatuses, setGoalStatuses] = useState<("active" | "paused" | "completed")[]>([
     "active",
@@ -199,35 +198,11 @@ function Index() {
   const [progressVal, setProgressVal] = useState(22.5);
 
   useEffect(() => {
-    let isDark = false;
+    document.documentElement.classList.remove("dark");
     try {
-      const savedTheme = localStorage.getItem("theme");
-      isDark = savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    } catch (e) {
-      try {
-        isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      } catch (err) {}
-    }
-    setTheme(isDark ? "dark" : "light");
+      localStorage.removeItem("theme");
+    } catch (e) {}
   }, []);
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-      try {
-        localStorage.setItem("theme", "dark");
-      } catch (e) {}
-    } else {
-      document.documentElement.classList.remove("dark");
-      try {
-        localStorage.setItem("theme", "light");
-      } catch (e) {}
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -319,15 +294,6 @@ function Index() {
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="rounded-full w-9 h-9 cursor-pointer"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4" />}
-            </Button>
             <Button variant="ghost" size="sm">Log in</Button>
             <Button size="sm">Start free trial</Button>
           </div>
@@ -348,19 +314,6 @@ function Index() {
               <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>How it works</a>
               <a href="#pricing" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
               <a href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
-              <hr className="border-border/70" />
-              <div className="flex items-center justify-between py-1">
-                <span className="text-foreground">Theme</span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={toggleTheme}
-                  className="rounded-full w-9 h-9 cursor-pointer"
-                  aria-label="Toggle theme"
-                >
-                  {theme === "dark" ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4" />}
-                </Button>
-              </div>
               <hr className="border-border/70" />
               <a href="#" className="text-foreground">Log in</a>
               <a href="#" className="text-foreground">Start free trial</a>
