@@ -7,6 +7,7 @@ import {
   Layout,
   Menu,
   Shield,
+  Sparkles,
   X,
 } from "lucide-react";
 
@@ -271,13 +272,19 @@ function Index() {
                 </div>
               </div>
 
-              <div className="hero-floating hero-floating-left">
-                <Clock3 className="h-4 w-4" />
-                <span>Fast prioritization</span>
-              </div>
-              <div className="hero-floating hero-floating-right">
-                <Shield className="h-4 w-4" />
-                <span>Private by default</span>
+              <div className="hero-chips-row">
+                <div className="hero-floating hero-floating-left">
+                  <Clock3 className="h-4 w-4" />
+                  <span>Fast prioritization</span>
+                </div>
+                <div className="hero-floating hero-floating-top">
+                  <Sparkles className="h-4 w-4" />
+                  <span>Zero setup</span>
+                </div>
+                <div className="hero-floating hero-floating-right">
+                  <Shield className="h-4 w-4" />
+                  <span>Private by default</span>
+                </div>
               </div>
             </div>
           </div>
