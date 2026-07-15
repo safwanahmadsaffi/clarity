@@ -324,12 +324,10 @@ function Index() {
 
         <section id="how-it-works" className="workflow-section border-y border-border/70 bg-background">
           <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-            <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
-              <div>
-                <div className="section-kicker">How it works</div>
-                <h2 className="section-title">Get your team up and running in minutes</h2>
-              </div>
-              <p className="section-copy max-w-2xl lg:ml-auto">
+            <div className="max-w-3xl">
+              <div className="section-kicker">How it works</div>
+              <h2 className="section-title">Get your team up and running in minutes</h2>
+              <p className="section-copy mt-5">
                 A simple workflow that keeps the team aligned without adding unnecessary process.
               </p>
             </div>
