@@ -186,19 +186,34 @@ function Index() {
   const [progressVal, setProgressVal] = useState(22.5);
 
   useEffect(() => {
-    // Check initial theme state
-    const isDark = document.documentElement.classList.contains("dark");
+    let isDark = false;
+    try {
+      const savedTheme = localStorage.getItem("theme");
+      isDark = savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    } catch (e) {
+      try {
+        isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      } catch (err) {}
+    }
     setTheme(isDark ? "dark" : "light");
   }, []);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-    setTheme(nextTheme);
-    if (nextTheme === "dark") {
+  useEffect(() => {
+    if (theme === "dark") {
       document.documentElement.classList.add("dark");
+      try {
+        localStorage.setItem("theme", "dark");
+      } catch (e) {}
     } else {
       document.documentElement.classList.remove("dark");
+      try {
+        localStorage.setItem("theme", "light");
+      } catch (e) {}
     }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   useEffect(() => {
